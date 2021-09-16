@@ -32,10 +32,18 @@ mongoose
   )
   .then((client) => {
     dbConnector = client.connections[0].db;
-    csvtojson().fromFile(fileName).then(source => {
-        // Fetching the all data from each row
+    // uncommenting this line will re-upload data to db
+    // addCsvDataToMongoAsJson()
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+  async function addCsvDataToMongoAsJson() {
+      return csvtojson().fromFile(fileName).then(source => {
+    // Fetching the all data from each row
         for (let i = 0; i < source.length; i++) {
-             let oneRow = {					
+            let oneRow = {					
                 institute: source[i]["Institute"],
                 academic_program_name: source[i]["Academic Program Name"],
                 quota: source[i]["Quota"],
@@ -43,45 +51,24 @@ mongoose
                 gender: source[i]["Gender"],
                 opening_rank: source[i]["Opening Rank"],
                 closing_rank: source[i]["Closing Rank"]
-             };
-             arrayToInsert.push(oneRow);
-         }
-         //inserting into the table “employees”
-         let collectionName = 'college-data';
-         let collection = dbConnector.collection(collectionName);
-         collection.insertMany(arrayToInsert, (err, result) => {
-             if (err) console.log(err);
-             if(result){
-                 console.log("Import CSV into database successfully.");
-             }
-         });
+            };
+            arrayToInsert.push(oneRow);
+        }
+        //inserting into the table “employees”
+        let collectionName = 'college-data';
+        let collection = dbConnector.collection(collectionName);
+        collection.insertMany(arrayToInsert, (err, result) => {
+            if (err) console.log(err);
+            if(result){
+                console.log("Import CSV into database successfully.");
+            }
+        });
     });
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
-
-
-
-
-
-
- 
-// -> Import Excel File to MongoDB database
-
-
-// Routes
-// app.use("/api/questions", questionRoutes);
-
-
-// serve react code from build folder when in staging 
+  }
 
 
 app.get("*", (req, res) => {
   res.send("invalid route");
-  // const error = new Error("Could not find this route", 404);
-  // throw error;
 });
 
 
@@ -89,5 +76,7 @@ app.listen(process.env.PORT, () =>
     console.log(`Server is listening at ${process.env.PORT}`)
 );
 
+
+// .env file
 // DEV_DB = mongodb+srv://nodoubtapp:Yq6IXnYjTov2ZnQD@cluster0.k468m.mongodb.net/harshpriyam?retryWrites=true&w=majority
 // PORT = 5001
