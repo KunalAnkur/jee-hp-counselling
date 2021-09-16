@@ -1,15 +1,14 @@
 const College = require("../db-models/collegeData");
 const User = require("../db-models/user");
-// /articles?year=2017&type=whatever or could call /articles?model=some-name
+// http://localhost:5001/getCollegeData/:name/:email/:phone?quota=&institute=&academic_program_name=&seat_type=&gender=&rank=7000  [example]
 exports.getCollegeData = (req, res) => {
   const query = [];
   let field = {};
   for (key in req.query) {
     if (req.query[key] !== "") {
-        if(key === 'closing_rank' || key === 'opening_rank'){
-            field[key] = Number(req.query[key]);
-            query.push(field);
-            field = {};
+        if(key === 'rank' ){
+            query.push({ opening_rank: { $lte: Number(req.query[key]) } });
+            query.push({ closing_rank: { $gte: Number(req.query[key]) } });
         }else{
             field[key] = req.query[key];
             query.push(field);
