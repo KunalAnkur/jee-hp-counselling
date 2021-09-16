@@ -19,9 +19,8 @@ exports.getCollegeData = (req, res) => {
   User.findOne({ email: req.params.email })
     .then((user) => {
       if (user) {
-        College.find({
-          $and: query,
-        })
+        if(query.length === 0){
+          College.find({})
           .then((data) => {
             return res.status(200).json(data);
           })
@@ -31,22 +30,50 @@ exports.getCollegeData = (req, res) => {
               message: "Something went wrong in fetching college data",
             });
           });
+        }else{
+          College.find({
+            $and: query,
+          })
+            .then((data) => {
+              return res.status(200).json(data);
+            })
+            .catch((e) => {
+              console.log(e);
+              return res.status(200).json({
+                message: "Something went wrong in fetching college data",
+              });
+            });
+        }
+        
       } else {
         new User(req.params)
           .save()
           .then((newuser) => {
-            College.find({
-              $and: query,
-            })
-              .then((data) => {
-                return res.status(200).json(data);
-              })
-              .catch((e) => {
-                console.log(e);
-                return res.status(200).json({
-                  message: "Something went wrong in fetching college data",
-                });
-              });
+           if (query.length === 0) {
+             College.find({})
+               .then((data) => {
+                 return res.status(200).json(data);
+               })
+               .catch((e) => {
+                 console.log(e);
+                 return res.status(200).json({
+                   message: "Something went wrong in fetching college data",
+                 });
+               });
+           } else {
+             College.find({
+               $and: query,
+             })
+               .then((data) => {
+                 return res.status(200).json(data);
+               })
+               .catch((e) => {
+                 console.log(e);
+                 return res.status(200).json({
+                   message: "Something went wrong in fetching college data",
+                 });
+               });
+           }
           })
           .catch((e) => {
             console.log(e);
