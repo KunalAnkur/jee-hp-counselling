@@ -21,7 +21,8 @@ let dbConnector = ''
 const fileName = 'Counselling-1.csv'
 const arrayToInsert = [];
 
-const MONGODB_URI = process.env.NODE_ENV === 'production' ? process.env.PROD_DB : process.env.DEV_DB
+const MONGODB_URI = process.env.DEV_DB
+// process.env.NODE_ENV === 'production' ? process.env.PROD_DB : process.env.DEV_DB
 mongoose
   .connect(
     `${MONGODB_URI}`,
