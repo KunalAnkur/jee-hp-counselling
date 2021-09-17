@@ -4,7 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const csvtojson = require('csvtojson');
-
+const {getCollegeData} = require("./controllers/college-data-controller")
 
 const app = express();
 
@@ -32,6 +32,7 @@ mongoose
   )
   .then((client) => {
     dbConnector = client.connections[0].db;
+    console.log("database is connected")
     // uncommenting this line will re-upload data to db
     // addCsvDataToMongoAsJson()
   })
@@ -66,6 +67,7 @@ mongoose
     });
   }
 
+app.get("/getCollegeData/:name/:email/:phone", getCollegeData);
 
 app.get("*", (req, res) => {
   res.send("invalid route");
