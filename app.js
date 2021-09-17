@@ -21,7 +21,7 @@ app.use(
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 let dbConnector = "";
-const fileName = "Counselling-1.csv";
+const fileName = "Counsel-six.csv";
 const arrayToInsert = [];
 
 const MONGODB_URI = process.env.DEV_DB
@@ -59,7 +59,7 @@ async function addCsvDataToMongoAsJson() {
         arrayToInsert.push(oneRow);
       }
       //inserting into the table “employees”
-      let collectionName = "college-datas";
+      let collectionName = "college-six-datas";
       let collection = dbConnector.collection(collectionName);
       collection.insertMany(arrayToInsert, (err, result) => {
         if (err) console.log(err);
