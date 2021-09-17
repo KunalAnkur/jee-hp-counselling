@@ -128,17 +128,17 @@ exports.getCollegeDataFiltering = (req, res) => {
 
       const institueUniquedata = [
         ...new Set(data.map((item) => item.institute)),
-      ];
+      ].filter(Boolean);
       const acadmeicUniquedata = [
         ...new Set(data.map((item) => item.academic_program_name)),
-      ];
+      ].filter(Boolean)
 
-      const quotaUniqueData = [...new Set(data.map((item) => item.quota))];
+      const quotaUniqueData = [...new Set(data.map((item) => item.quota))].filter(Boolean)
 
       const seatTypeUniqueData = [
         ...new Set(data.map((item) => item.seat_type)),
-      ];
-      const genderUniqueData = [...new Set(data.map((item) => item.gender))];
+      ].filter(Boolean)
+      const genderUniqueData = [...new Set(data.map((item) => item.gender))].filter(Boolean)
 
       return res.status(200).json({
         institueUniquedata,
