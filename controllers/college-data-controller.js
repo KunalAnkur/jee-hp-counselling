@@ -1,10 +1,24 @@
-const College = require("../db-models/collegeData");
+const { 
+  counsellingOne,
+  // counsellingTwo,
+  // counsellingThree,
+  // counsellingFour,
+  // counsellingFive,
+  counsellingSix
+} = require("../db-models/collegeData");
 const User = require("../db-models/user");
+
+const counselObject = {
+  'counselling-1': counsellingOne,
+  // 'counselling-2': counsellingTwo,
+  // 'counselling-3': counsellingThree,
+  // 'counselling-4': counsellingFour,
+  // 'counselling-5': counsellingFive,
+  'counselling-6': counsellingSix
+}
 // http://localhost:5001/getCollegeData/:name/:email/:phone?quota=&institute=&academic_program_name=&seat_type=&gender=&rank=7000  [example]
 exports.getCollegeData = (req, res) => {
   const query = [];
-
-  // console.log(req.params);
 
   let field = {};
   for (key in req.query) {
@@ -29,7 +43,7 @@ exports.getCollegeData = (req, res) => {
           // user.searchCombinations.push(req.query);
           // user.save();
 
-          College.find({})
+          counselObject[req.query.counselling].find({})
             .then((data) => {
               return res.status(200).json(data);
             })
@@ -46,7 +60,7 @@ exports.getCollegeData = (req, res) => {
 
           // console.log(user.searchCombinations);
 
-          College.find({
+          counselObject[req.query.counselling].find({
             $and: query,
           })
             .then((data) => {
@@ -65,7 +79,7 @@ exports.getCollegeData = (req, res) => {
           .then((newuser) => {
             // console.log(newuser);
             if (query.length === 0) {
-              College.find({})
+              counselObject[req.query.counselling].find({})
                 .then((data) => {
                   return res.status(200).json(data);
                 })
@@ -80,7 +94,7 @@ exports.getCollegeData = (req, res) => {
               user.searchCombinations.push(req.query);
               user.save();
 
-              College.find({
+              counselObject[req.query.counselling].find({
                 $and: query,
               })
                 .then((data) => {
@@ -111,7 +125,7 @@ exports.getCollegeData = (req, res) => {
 };
 
 exports.getCollegeDataFiltering = (req, res) => {
-  const collegeData = College.find({})
+  const collegeData = counselObject[req.query.counselling].find({})
     .then((data) => {
       // const getUniqueBy = (arr, prop) => {
       //   // const set = new Set();
