@@ -6,31 +6,31 @@ exports.getCollegeData = (req, res) => {
   let field = {};
   for (key in req.query) {
     if (req.query[key] !== "") {
-        if(key === 'rank' ){
-            query.push({ opening_rank: { $lte: Number(req.query[key]) } });
-            query.push({ closing_rank: { $gte: Number(req.query[key]) } });
-        }else{
-            field[key] = req.query[key];
-            query.push(field);
-            field = {};
-        }
+      if (key === "rank") {
+        query.push({ opening_rank: { $lte: Number(req.query[key]) } });
+        query.push({ closing_rank: { $gte: Number(req.query[key]) } });
+      } else {
+        field[key] = req.query[key];
+        query.push(field);
+        field = {};
+      }
     }
   }
   User.findOne({ email: req.params.email })
     .then((user) => {
       if (user) {
-        if(query.length === 0){
+        if (query.length === 0) {
           College.find({})
-          .then((data) => {
-            return res.status(200).json(data);
-          })
-          .catch((e) => {
-            console.log(e);
-            return res.status(200).json({
-              message: "Something went wrong in fetching college data",
+            .then((data) => {
+              return res.status(200).json(data);
+            })
+            .catch((e) => {
+              console.log(e);
+              return res.status(200).json({
+                message: "Something went wrong in fetching college data",
+              });
             });
-          });
-        }else{
+        } else {
           College.find({
             $and: query,
           })
@@ -44,36 +44,35 @@ exports.getCollegeData = (req, res) => {
               });
             });
         }
-        
       } else {
         new User(req.params)
           .save()
           .then((newuser) => {
-           if (query.length === 0) {
-             College.find({})
-               .then((data) => {
-                 return res.status(200).json(data);
-               })
-               .catch((e) => {
-                 console.log(e);
-                 return res.status(200).json({
-                   message: "Something went wrong in fetching college data",
-                 });
-               });
-           } else {
-             College.find({
-               $and: query,
-             })
-               .then((data) => {
-                 return res.status(200).json(data);
-               })
-               .catch((e) => {
-                 console.log(e);
-                 return res.status(200).json({
-                   message: "Something went wrong in fetching college data",
-                 });
-               });
-           }
+            if (query.length === 0) {
+              College.find({})
+                .then((data) => {
+                  return res.status(200).json(data);
+                })
+                .catch((e) => {
+                  console.log(e);
+                  return res.status(200).json({
+                    message: "Something went wrong in fetching college data",
+                  });
+                });
+            } else {
+              College.find({
+                $and: query,
+              })
+                .then((data) => {
+                  return res.status(200).json(data);
+                })
+                .catch((e) => {
+                  console.log(e);
+                  return res.status(200).json({
+                    message: "Something went wrong in fetching college data",
+                  });
+                });
+            }
           })
           .catch((e) => {
             console.log(e);
@@ -88,5 +87,17 @@ exports.getCollegeData = (req, res) => {
       return res
         .status(200)
         .json({ message: "Something went wrong in finding user" });
-    });;
+    });
+};
+
+exports.getCollegeDataFiltering = (req, res) => {
+  const collegeData = College.find({})
+    .then((data) => {
+      return res.status(200).json(data);
+    })
+    .catch((err) => {
+      res
+        .status(400)
+        .json({ message: "Error while getting data for filtering" });
+    });
 };
