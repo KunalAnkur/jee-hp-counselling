@@ -49,13 +49,13 @@ mongoose
                 quota: source[i]["Quota"],
                 seat_type: source[i]["Seat Type"],
                 gender: source[i]["Gender"],
-                opening_rank: source[i]["Opening Rank"],
-                closing_rank: source[i]["Closing Rank"]
+                opening_rank: Number(source[i]["Opening Rank"]),
+                closing_rank: Number(source[i]["Closing Rank"])
             };
             arrayToInsert.push(oneRow);
         }
         //inserting into the table “employees”
-        let collectionName = 'college-data';
+        let collectionName = 'college-datas';
         let collection = dbConnector.collection(collectionName);
         collection.insertMany(arrayToInsert, (err, result) => {
             if (err) console.log(err);
