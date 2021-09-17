@@ -125,7 +125,7 @@ exports.getCollegeData = (req, res) => {
 };
 
 exports.getCollegeDataFiltering = (req, res) => {
-  const collegeData = counselObject[req.query.counselling].find({})
+  const collegeData = counsellingSix.find({})
     .then((data) => {
       // const getUniqueBy = (arr, prop) => {
       //   // const set = new Set();
