@@ -43,7 +43,7 @@ exports.getCollegeData = (req, res) => {
           // user.searchCombinations.push(req.query);
           // user.save();
 
-          counselObject[req.query.counselling].find({})
+          counsellingSix.find({})
             .then((data) => {
               return res.status(200).json(data);
             })
@@ -60,7 +60,7 @@ exports.getCollegeData = (req, res) => {
 
           // console.log(user.searchCombinations);
 
-          counselObject[req.query.counselling].find({
+          counsellingSix.find({
             $and: query,
           })
             .then((data) => {
@@ -79,7 +79,7 @@ exports.getCollegeData = (req, res) => {
           .then((newuser) => {
             // console.log(newuser);
             if (query.length === 0) {
-              counselObject[req.query.counselling].find({})
+              counsellingSix.find({})
                 .then((data) => {
                   return res.status(200).json(data);
                 })
@@ -94,7 +94,7 @@ exports.getCollegeData = (req, res) => {
               user.searchCombinations.push(req.query);
               user.save();
 
-              counselObject[req.query.counselling].find({
+              counsellingSix.find({
                 $and: query,
               })
                 .then((data) => {
