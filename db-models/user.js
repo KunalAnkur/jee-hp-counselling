@@ -6,11 +6,12 @@ const userSchema = mongoose.model("user", {
   phone: { type: String },
   searchCombinations: [
     {
-      institute: { type: String, default: "hiii" },
+      institute: { type: String },
       academic_program_name: { type: String },
       quota: { type: String },
       seat_type: { type: String },
       gender: { type: String },
+      rank: { type: Number },
     },
   ],
 });

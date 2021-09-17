@@ -26,8 +26,8 @@ exports.getCollegeData = (req, res) => {
         // console.log(user);
 
         if (query.length === 0) {
-          user.searchCombinations.push(req.query);
-          user.save();
+          // user.searchCombinations.push(req.query);
+          // user.save();
 
           College.find({})
             .then((data) => {
@@ -40,8 +40,7 @@ exports.getCollegeData = (req, res) => {
               });
             });
         } else {
-          //this is condition where user is created and there is query
-
+          //this is condition where user is already created and there is query paramter
           user.searchCombinations.push(req.query);
           user.save();
 
@@ -64,7 +63,7 @@ exports.getCollegeData = (req, res) => {
         new User(req.params)
           .save()
           .then((newuser) => {
-            console.log(newuser);
+            // console.log(newuser);
             if (query.length === 0) {
               College.find({})
                 .then((data) => {
@@ -77,6 +76,10 @@ exports.getCollegeData = (req, res) => {
                   });
                 });
             } else {
+              // creating new user and query is also passed
+              user.searchCombinations.push(req.query);
+              user.save();
+
               College.find({
                 $and: query,
               })
