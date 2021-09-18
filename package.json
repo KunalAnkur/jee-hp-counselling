@@ -2,11 +2,16 @@
   "name": "hp-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "build": "babel node-server --out-dir dist",
+    "build-fe": "cd react-client && npm run build",
+    "react-client-install": "cd react-client && npm install",
+    "heroku-postbuild": "npm run react-client-install && npm run build-fe && npm run build",
+    "local-dev": "nodemon node-server/app.js",
+    "dev": "nodemon --exec npm run restart",
+    "restart": "rimraf dist && npm run build && npm run start",
+    "start": "node dist/app.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +24,14 @@
     "mongoose": "^6.0.6"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-core": "7.0.0-bridge.0",
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.4",
+    "rimraf": "^2.6.2"
   }
 }

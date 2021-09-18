@@ -1,0 +1,103 @@
+.heading {
+  text-align: center;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: 700;
+  background-color: #2366cc;
+  color: white;
+}
+
+.form-container {
+  /* display: flex; */
+  padding: 0px 20px;
+  /* justify-content: center; */
+}
+
+.submitBtn {
+  margin: 8px;
+  padding: 12px 24px;
+  background-color: #2366cc;
+  color: white;
+  font-size: 16px;
+  border: 2px solid #073f92;
+}
+
+.submitBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.loadingContainer {
+  width: 100vw;
+  height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.data-loadingContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.collegeDataContainer {
+  padding: 0px 20px;
+}
+
+.formdiv {
+  margin: 10px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.userFormContainer {
+  margin: 20px 0px;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+}
+
+.userInputDiv > div {
+  margin-bottom: 12px;
+}
+
+.enterDetailsText {
+  padding: 5px;
+  text-align: center;
+  font-size: 20px;
+}
+
+.filterContainer > * {
+  margin-bottom: 10px;
+}
+
+select {
+  width: 280px;
+  padding: 8px;
+  margin-top: 8px;
+}
+
+option {
+  width: 280px;
+}
+
+.rankInput {
+  width: 263px;
+  padding: 8px;
+}
+
+.listBtn {
+  padding: 4px 8px;
+  margin: 4px;
+  color: black;
+  border: 2px solid rgb(2, 37, 66);
+}
+
+@media only screen and (max-width: 600px) {
+  .formdiv {
+    display: flex;
+    flex-direction: column;
+  }
+}

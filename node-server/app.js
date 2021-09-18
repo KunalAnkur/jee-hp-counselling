@@ -11,7 +11,7 @@ const {
 
 const {counsellingSix} = require("./db-models/collegeData");
 
-const {couselling_six_data} = require("./couselling_six");
+const {couselling_six_data} = require("../couselling_six");
 
 const app = express();
 
@@ -92,6 +92,10 @@ app.get("/getData", (req,res)=>{
 app.get("*", (req, res) => {
   res.send("invalid route");
 });
+
+if (process.env.NODE_ENV !== 'development') {
+  app.use(express.static('react-client/build'));
+}
 
 app.listen(process.env.PORT, () =>
   console.log(`Server is listening at ${process.env.PORT}`)
