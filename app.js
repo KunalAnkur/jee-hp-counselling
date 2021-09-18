@@ -15,14 +15,16 @@ const {couselling_six_data} = require("./couselling_six");
 
 const app = express();
 
-app.use(express.json());
-app.use(cookieParser());
-app.use(cors());
-app.use(express.urlencoded({ limit: "30mb", extended: true }));
 const corsOptions = {
   origin: 'https://jee-counselling.netlify.app/',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors(corsOptions));
+app.use(express.urlencoded({ limit: "30mb", extended: true }));
+
 
 let dbConnector = "";
 const fileName = "Counsel-six.csv";
