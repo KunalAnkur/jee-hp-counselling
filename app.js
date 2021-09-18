@@ -78,11 +78,11 @@ async function addCsvDataToMongoAsJson() {
   return;
 }
 
-app.options('*', cors())
+app.options('*', cors(corsOptions))
 
-app.get("/getCollegeData/:name/:email/:phone", cors(), getCollegeData);
+app.get("/getCollegeData/:name/:email/:phone", cors(corsOptions), getCollegeData);
 
-app.get("/getCollegeDataFiltering", cors(), getCollegeDataFiltering);
+app.get("/getCollegeDataFiltering", cors(corsOptions), getCollegeDataFiltering);
 
 app.get("/getData", cors(), (req,res)=>{
   counsellingSix.find({}).then((data)=>{
