@@ -20,6 +20,9 @@ const counselObject = {
 exports.getCollegeData = (req, res) => {
   const query = [];
 
+  // console.log("line 23");
+  // console.log(req.query);
+
   let field = {};
   for (key in req.query) {
     if (req.query[key] !== "") {
@@ -45,6 +48,7 @@ exports.getCollegeData = (req, res) => {
 
           counsellingSix.find({})
             .then((data) => {
+              // console.log("line 48", data.length);
               return res.status(200).json(data);
             })
             .catch((e) => {
@@ -58,12 +62,15 @@ exports.getCollegeData = (req, res) => {
           user.searchCombinations.push(req.query);
           user.save();
 
+         
+
           // console.log(user.searchCombinations);
 
           counsellingSix.find({
             $and: query,
           })
             .then((data) => {
+              //  console.log("line 70", data.length);
               return res.status(200).json(data);
             })
             .catch((e) => {
@@ -81,6 +88,8 @@ exports.getCollegeData = (req, res) => {
             if (query.length === 0) {
               counsellingSix.find({})
                 .then((data) => {
+                  // console.log("line 87", data.length);
+
                   return res.status(200).json(data);
                 })
                 .catch((e) => {
@@ -98,6 +107,7 @@ exports.getCollegeData = (req, res) => {
                 $and: query,
               })
                 .then((data) => {
+                  // console.log("line 107", data.length);
                   return res.status(200).json(data);
                 })
                 .catch((e) => {

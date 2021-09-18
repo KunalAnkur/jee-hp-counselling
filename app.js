@@ -9,6 +9,10 @@ const {
   getCollegeDataFiltering,
 } = require("./controllers/college-data-controller");
 
+const {counsellingSix} = require("./db-models/collegeData");
+
+const {couselling_six_data} = require("./couselling_six");
+
 const app = express();
 
 app.use(express.json());
@@ -24,7 +28,7 @@ let dbConnector = "";
 const fileName = "Counsel-six.csv";
 const arrayToInsert = [];
 
-const MONGODB_URI = process.env.DEV_DB
+const MONGODB_URI = process.env.DEV_DB;
 // process.env.NODE_ENV === 'production' ? process.env.PROD_DB : process.env.DEV_DB
 mongoose
   .connect(`${MONGODB_URI}`, {
@@ -35,44 +39,55 @@ mongoose
     dbConnector = client.connections[0].db;
     console.log("database is connected");
     // uncommenting this line will re-upload data to db
-    // addCsvDataToMongoAsJson()
+    // addCsvDataToMongoAsJson();
   })
   .catch((err) => {
     console.log(err);
   });
 
 async function addCsvDataToMongoAsJson() {
-  return csvtojson()
-    .fromFile(fileName)
-    .then((source) => {
-      // Fetching the all data from each row
-      for (let i = 0; i < source.length; i++) {
-        let oneRow = {
-          institute: source[i]["Institute"],
-          academic_program_name: source[i]["Academic Program Name"],
-          quota: source[i]["Quota"],
-          seat_type: source[i]["Seat Type"],
-          gender: source[i]["Gender"],
-          opening_rank: source[i]["Opening Rank"],
-          closing_rank: source[i]["Closing Rank"],
-        };
-        arrayToInsert.push(oneRow);
-      }
-      //inserting into the table “employees”
-      let collectionName = "college-six-datas";
-      let collection = dbConnector.collection(collectionName);
-      collection.insertMany(arrayToInsert, (err, result) => {
-        if (err) console.log(err);
-        if (result) {
-          console.log("Import CSV into database successfully.");
-        }
-      });
-    });
+  // return csvtojson()
+  //   .fromFile(fileName)
+  //   .then((source) => {
+  // Fetching the all data from each row
+  const source = couselling_six_data;
+  for (let i = 0; i < source.length; i++) {
+    let oneRow = {
+      institute: source[i]["Institute"],
+      academic_program_name: source[i]["Academic Program Name"],
+      quota: source[i]["Quota"],
+      seat_type: source[i]["Seat Type"],
+      gender: source[i]["Gender"],
+      opening_rank: source[i]["Opening Rank"],
+      closing_rank: source[i]["Closing Rank"],
+    };
+    arrayToInsert.push(oneRow);
+  }
+  //inserting into the table “employees”
+  let collectionName = "couselling-six-second-tests";
+  let collection = dbConnector.collection(collectionName);
+  collection.insertMany(arrayToInsert, (err, result) => {
+    if (err) console.log(err);
+    if (result) {
+      console.log("Import CSV into database successfully.");
+    }
+  });
+  // });
+  return;
 }
 
 app.get("/getCollegeData/:name/:email/:phone", getCollegeData);
 
 app.get("/getCollegeDataFiltering", getCollegeDataFiltering);
+
+app.get("/getData", (req,res)=>{
+  counsellingSix.find({}).then((data)=>{
+    // console.log(data.length)
+    res.send(data);
+  }).catch((err)=>{
+    res.send(err);
+  })
+})
 
 app.get("*", (req, res) => {
   res.send("invalid route");

@@ -50,7 +50,7 @@ const counsellingOne = mongoose.model("college-one-data", {
 //   closing_rank: { type: Number },
 // });
 
-const counsellingSix = mongoose.model("college-six-data", {
+const counsellingSix = mongoose.model("couselling-six-second-tests", {
   institute: { type: String },
   academic_program_name: { type: String },
   quota: { type: String },
