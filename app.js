@@ -16,7 +16,7 @@ const {couselling_six_data} = require("./couselling_six");
 const app = express();
 
 const corsOptions = {
-  origin: 'https://jee-counselling.netlify.app/',
+  origin: ['https://jee-counselling.netlify.app/', 'https://hp-jee-server.herokuapp.com/'],
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
@@ -77,6 +77,8 @@ async function addCsvDataToMongoAsJson() {
   // });
   return;
 }
+
+app.options('*', cors())
 
 app.get("/getCollegeData/:name/:email/:phone", cors(), getCollegeData);
 
