@@ -17,11 +17,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 let dbConnector = "";
