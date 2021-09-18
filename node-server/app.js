@@ -3,7 +3,6 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
-const csvtojson = require("csvtojson");
 const {
   getCollegeData,
   getCollegeDataFiltering,
@@ -11,18 +10,18 @@ const {
 
 const {counsellingSix} = require("./db-models/collegeData");
 
-const {couselling_six_data} = require("../couselling_six");
+const {couselling_six_data} = require("./couselling_six");
 
 const app = express();
 
-const corsOptions = {
-  origin: ['https://jee-counselling.netlify.app/', 'https://hp-jee-server.herokuapp.com/'],
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+// const corsOptions = {
+//   origin: ['https://jee-counselling.netlify.app/', 'https://hp-jee-server.herokuapp.com/'],
+//   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// }
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 
@@ -78,13 +77,13 @@ async function addCsvDataToMongoAsJson() {
   return;
 }
 
-app.options('*', cors(corsOptions))
+// app.options('*', cors(corsOptions))
 
-app.get("/getCollegeData/:name/:email/:phone", cors(corsOptions), getCollegeData);
+app.get("/getCollegeData/:name/:email/:phone", getCollegeData);
 
-app.get("/getCollegeDataFiltering", cors(corsOptions), getCollegeDataFiltering);
+app.get("/getCollegeDataFiltering", getCollegeDataFiltering);
 
-app.get("/getData", cors(), (req,res)=>{
+app.get("/getData", (req,res)=>{
   counsellingSix.find({}).then((data)=>{
     // console.log(data.length)
     res.send(data);
@@ -97,7 +96,7 @@ app.get("*", (req, res) => {
   res.send("invalid route");
 });
 
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static('react-client/build'));
 }
 
