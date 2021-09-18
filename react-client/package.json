@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://hp-jee-server.herokuapp.com/",
-  "proxy": "http://localhost:5001",
+  "proxy": "https://hp-jee-server.herokuapp.com/",
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@testing-library/jest-dom": "^5.14.1",
