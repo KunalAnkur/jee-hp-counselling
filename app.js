@@ -19,6 +19,10 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
+const corsOptions = {
+  origin: 'https://jee-counselling.netlify.app/',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
 let dbConnector = "";
 const fileName = "Counsel-six.csv";
@@ -72,11 +76,11 @@ async function addCsvDataToMongoAsJson() {
   return;
 }
 
-app.get("/getCollegeData/:name/:email/:phone", getCollegeData);
+app.get("/getCollegeData/:name/:email/:phone", cors(corsOptions), getCollegeData);
 
-app.get("/getCollegeDataFiltering", getCollegeDataFiltering);
+app.get("/getCollegeDataFiltering", cors(corsOptions), getCollegeDataFiltering);
 
-app.get("/getData", (req,res)=>{
+app.get("/getData", cors(corsOptions), (req,res)=>{
   counsellingSix.find({}).then((data)=>{
     // console.log(data.length)
     res.send(data);
