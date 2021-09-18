@@ -21,7 +21,15 @@ exports.getCollegeData = (req, res) => {
   const query = [];
 
   // console.log("line 23");
-  // console.log(req.query);
+  const params = {
+    email: req.query.email,
+    name: req.query.name,
+    phone: req.query.phone
+  }
+
+  delete req.query.email
+  delete req.query.name
+  delete req.query.phone
 
   let field = {};
   for (key in req.query) {
@@ -37,7 +45,7 @@ exports.getCollegeData = (req, res) => {
     }
   }
 
-  User.findOne({ email: req.params.email })
+  User.findOne({ email: params.email })
     .then((user) => {
       if (user) {
         // console.log(user);
@@ -81,7 +89,7 @@ exports.getCollegeData = (req, res) => {
             });
         }
       } else {
-        new User(req.params)
+        new User(params)
           .save()
           .then((newuser) => {
             // console.log(newuser);

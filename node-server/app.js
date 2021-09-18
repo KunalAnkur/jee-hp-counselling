@@ -83,7 +83,7 @@ if (process.env.NODE_ENV !== 'dev') {
   app.use(express.static('react-client/build'));
 }
 
-app.get("/getCollegeData/:name/:email/:phone", getCollegeData);
+app.get("/getCollegeData", getCollegeData);
 
 app.get("/getCollegeDataFiltering", getCollegeDataFiltering);
 

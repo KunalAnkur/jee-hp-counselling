@@ -9,12 +9,10 @@ import FilterItem from "./FilterItem";
 const Filters = ({
   handleFilterChange,
   collegeDataOptions: {
-    data: {
       acadmeicUniquedata,
       quotaUniqueData,
       seatTypeUniqueData,
-      genderUniqueData,
-    },
+      genderUniqueData
   },
 }) => {
   const instituteArray = instituteUniqueOptions;

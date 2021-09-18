@@ -7,6 +7,12 @@ import Filters from "./components/Filters";
 import UserDataComp from "./components/UserDataComp";
 import UserForm from "./components/UserForm";
 import { validateForm } from "./validation/validation";
+import {
+  seatTypeUniqueData,
+  acadmeicUniquedata,
+  quotaUniqueData,
+  genderUniqueData
+} from './dummyData/dummyData'
 
 function App() {
   const [collegeData, setCollegeData] = useState("");
@@ -47,12 +53,15 @@ function App() {
   } = filterFormData;
 
   useEffect(() => {
-    axios
-      .get("/getCollegeDataFiltering")
-      .then((data) => {
-        if (data) setCollegeDataForFiltering(data);
-      });
+        setCollegeDataForFiltering({
+          seatTypeUniqueData,
+          acadmeicUniquedata,
+          quotaUniqueData,
+          genderUniqueData
+        });
   }, []);
+
+  console.log(collegeDataForFiltering);
 
   const handleInput = (e) => {
     setUserFormData({
@@ -81,10 +90,9 @@ function App() {
 
     axios
       .get(
-        `/getCollegeData/${fullName}/${email}/${phoneNumber}?academic_program_name=${academic_program_name}&quota=${quota}&seat_type=${seat_type}&gender=${gender}&rank=${rank}&counselling=${counselling}`
+        `/getCollegeData?name=${fullName}&email=${email}&phone=${phoneNumber}&academic_program_name=${academic_program_name}&quota=${quota}&seat_type=${seat_type}&gender=${gender}&rank=${rank}&counselling=${counselling}`
       )
       .then((res) => {
-        console.log(res.data);
         setCollegeData(res.data);
         setUserDataSubmitted(true);
         setIsLoading(false)
