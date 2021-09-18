@@ -79,6 +79,10 @@ async function addCsvDataToMongoAsJson() {
 
 // app.options('*', cors(corsOptions))
 
+if (process.env.NODE_ENV !== 'dev') {
+  app.use(express.static('react-client/build'));
+}
+
 app.get("/getCollegeData/:name/:email/:phone", getCollegeData);
 
 app.get("/getCollegeDataFiltering", getCollegeDataFiltering);
@@ -95,10 +99,6 @@ app.get("/getData", (req,res)=>{
 app.get("*", (req, res) => {
   res.send("invalid route");
 });
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('react-client/build'));
-}
 
 app.listen(process.env.PORT, () =>
   console.log(`Server is listening at ${process.env.PORT}`)
