@@ -21,7 +21,11 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 
@@ -79,9 +83,7 @@ async function addCsvDataToMongoAsJson() {
 
 // app.options('*', cors(corsOptions))
 
-if (process.env.NODE_ENV !== 'dev') {
-  app.use(express.static('react-client/build'));
-}
+
 
 app.get("/getCollegeData", getCollegeData);
 
@@ -95,6 +97,10 @@ app.get("/getData", (req,res)=>{
     res.send(err);
   })
 })
+
+if (process.env.NODE_ENV !== 'dev') {
+  app.use(express.static('react-client/build'));
+}
 
 app.get("*", (req, res) => {
   res.send("invalid route");
