@@ -1,5 +1,5 @@
 import { CircularProgress } from "@material-ui/core";
-import axios from "axios";
+import axios from "./axios";
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import CollegeDataList from "./components/CollegeDataList";
