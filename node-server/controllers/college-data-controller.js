@@ -32,14 +32,25 @@ exports.getCollegeData = (req, res) => {
   delete req.query.phone
 
   let field = {};
-  for (key in req.query) {
-    console.log(key);
+  // for (key in req.query) {
+  //   if (req.query[key] !== "") {
+  //     if (key === "rank") {
+  //       query.push({ opening_rank: { $lte: Number(req.query[key]) } });
+  //       query.push({ closing_rank: { $gte: Number(req.query[key]) } });
+  //     } else {
+  //       field[key] = req.query[key];
+  //       query.push(field);
+  //       field = {};
+  //     }
+  //   }
+  // }  
+  for (let i = 0; i< Object.keys(req.query); i++) {
     if (req.query[key] !== "") {
-      if (key === "rank") {
-        query.push({ opening_rank: { $lte: Number(req.query[key]) } });
-        query.push({ closing_rank: { $gte: Number(req.query[key]) } });
+      if (Object.keys(req.query)[i] === "rank") {
+        query.push({ opening_rank: { $lte: Number(req.query[Object.keys(req.query)[i]]) } });
+        query.push({ closing_rank: { $gte: Number(req.query[Object.keys(req.query)[i]]) } });
       } else {
-        field[key] = req.query[key];
+        field[Object.keys(req.query)[i]] = req.query[Object.keys(req.query)[i]];
         query.push(field);
         field = {};
       }
