@@ -99,6 +99,8 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        console.log(err.message);
+        console.log("error in 103")
       });
   };
 

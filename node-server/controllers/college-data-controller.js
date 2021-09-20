@@ -20,7 +20,7 @@ const counselObject = {
 exports.getCollegeData = (req, res) => {
   const query = [];
 
-  console.log(req);
+  // console.log(req.query);
   const params = {
     email: req.query.email,
     name: req.query.name,
