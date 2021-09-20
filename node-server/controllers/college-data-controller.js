@@ -32,6 +32,7 @@ exports.getCollegeData = (req, res) => {
   delete req.query.phone
 
   let field = {};
+  console.log(req.query);
   for (key in req.query) {
     if (req.query[key] !== "") {
       if (key === "rank") {
