@@ -32,8 +32,8 @@ exports.getCollegeData = (req, res) => {
   delete req.query.phone
 
   let field = {};
-  console.log(req.query);
   for (key in req.query) {
+    console.log(key);
     if (req.query[key] !== "") {
       if (key === "rank") {
         query.push({ opening_rank: { $lte: Number(req.query[key]) } });
